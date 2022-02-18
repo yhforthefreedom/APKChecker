@@ -1,0 +1,65 @@
+{
+    "--apk": "D:/apk/weather_ruirui_1.5_64_release-signed.apk",
+    "--formatConfig": [
+        {
+            "group": [
+                {
+                    "name": "Android System",
+                    "package": "android"
+                },
+                {
+                    "name": "java system",
+                    "package": "java"
+                },
+                {
+                    "name": "天气app",
+                    "package": "com.weather.tqdfw1xdida2"
+                }
+            ],
+            "name": "-countMethod"
+        }
+    ],
+    "--format": "mm.html,mm.json",
+    "options": [
+        {
+            "name": "-manifest"
+        },
+        {
+            "--suffix": "png, jpg, jpeg, gif, arsc",
+            "--min": "10",
+            "name": "-fileSize",
+            "--order": "desc"
+        },
+        {
+            "--group": "package",
+            "name": "-countMethod"
+        },
+        {
+            "name": "-checkResProguard"
+        },
+        {
+            "--min": "10",
+            "name": "-findNonAlphaPng"
+        },
+        {
+            "name": "-checkMultiLibrary"
+        },
+        {
+            "--suffix": "png, jpg, jpeg, gif, arsc",
+            "name": "-uncompressedFile"
+        },
+        {
+            "name": "-countR"
+        },
+        {
+            "name": "-duplicatedFile"
+        },
+        {
+            "name": "-unusedAssets",
+            "--ignoreAssets": [
+                "*.so"
+            ]
+        }
+    ],
+    "--output": "E:\\check_apk/out/apk-checker-result"
+}
