@@ -7,15 +7,16 @@ import shutil
 
 def main():
     print('----------项目初始化ing----------')
-    check_json = json.loads(read_file(config_path, 'utf-8'))
-    check_json["--output"] = output_path
-    with open(config_path, 'w', encoding='utf8') as f:
-        f.write(json.dumps(check_json, indent=4, ensure_ascii=False))
     if not os.path.exists(out_path):
         os.mkdir(out_path)
     else:
         shutil.rmtree(out_path)
         os.mkdir(out_path)
+    check_json = json.loads(read_file(config_path, 'utf-8'))
+    if check_json["--output"] != output_path:
+        check_json["--output"] = output_path
+        with open(config_path, 'w', encoding='utf8') as f:
+            f.write(json.dumps(check_json, indent=4, ensure_ascii=False))
     try:
         print("----------开始matrix检查app----------")
         cmd = "java -jar {} --config {}".format(matrix_path, config_path)
