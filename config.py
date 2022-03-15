@@ -10,6 +10,7 @@ matrix_path = project_path + "/matrix-apk-canary-2.0.5.jar"
 out_json_path = out_path + "/apk-checker-result.json"
 out_html_path = out_path + "/apk-checker-result.html"
 report_path = project_path + f"/report/{time.strftime('%Y%m%d%H%M%S')}.html"
+template_path = "report.html"
 
 
 taskDescription = "Unzip the apk file to dest path."
