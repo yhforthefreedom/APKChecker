@@ -53,6 +53,7 @@ def main():
         with open(report_path, 'w', encoding='utf8') as f:
             html = template_environment.get_template(template_path).render(report_context)
             f.write(html)
+        print("----------在report文件目录下成功生成测试报告----------")
     except Exception as e:
         print("检查app异常!{}".format(e))
 
