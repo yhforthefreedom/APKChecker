@@ -23,7 +23,6 @@ def main():
         cmd = "java -jar {} --config {}".format(matrix_path, config_path)
         print(f'----------执行命令{cmd}----------')
         subprocess.call(cmd, shell=True)
-        print("----------检查app完成!----------")
         print("----------收集数据ing----------")
         app_name = check_json['--formatConfig'][0]['group'][-1]['name']
         gd = GetData()
@@ -46,8 +45,6 @@ def main():
         report_context = {
             "context": context
         }
-
-        print("----------收集数据完成----------")
         print("----------生成测试报告ing----------")
         template_environment = Environment(
             autoescape=False,
@@ -56,7 +53,6 @@ def main():
         with open(report_path, 'w', encoding='utf8') as f:
             html = template_environment.get_template(template_path).render(report_context)
             f.write(html)
-        print("----------成功生成测试报告----------")
     except Exception as e:
         print("检查app异常!{}".format(e))
 
