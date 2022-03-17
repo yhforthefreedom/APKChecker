@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import json
 from config import *
+from loguru import logger
 
 
 def read_file(filename, method):
@@ -13,7 +14,7 @@ def read_file(filename, method):
         with open(filename, "r", encoding=method) as f_r:
             result = f_r.read()
     except Exception as e:
-        print('{}读取异常!{}'.format(filename, e))
+        logger.error('{}读取异常!{}'.format(filename, e))
     finally:
         return result
 
@@ -44,7 +45,7 @@ class GetData:
             self.base_data['apk_size'] = self.get_size(self.result['total-size'])
             self.base_data.update()
         except Exception as e:
-            print("获取基础信息异常!{}".format(e))
+            logger.error("获取基础信息异常!{}".format(e))
         finally:
             return self.base_data
 
@@ -66,7 +67,7 @@ class GetData:
                 #     self.data['文件大小'] = file['entry-size']
                 self.data_list.append(self.data)
         except Exception as e:
-            print("获取资源分布信息异常!{}".format(e))
+            logger.error("获取资源分布信息异常!{}".format(e))
         finally:
             return self.data_list
 
@@ -85,7 +86,7 @@ class GetData:
             self.base_data['targetSdkVersion'] = self.result['android:targetSdkVersion']
             self.base_data.update()
         except Exception as e:
-            print("获取包相关信息异常!{}".format(e))
+            logger.error("获取包相关信息异常!{}".format(e))
         finally:
             return self.base_data
 
@@ -102,7 +103,7 @@ class GetData:
                 info = "{ " + info + " }," + "\n"
                 total_info += info
         except Exception as e:
-            print("组装饼图资源分布异常!{}".format(e))
+            logger.error("组装饼图资源分布异常!{}".format(e))
         finally:
             return total_info
 
@@ -120,7 +121,7 @@ class GetData:
             table_info = soup.prettify().replace("<html>", "").replace("</html>", ""). \
                 replace('<tr hidden="true">', '<tr>').replace('<li hidden="true">', '<li>').replace('...', '')  # 修改html中的属性
         except Exception as e:
-            print("获取html中的table区域异常!{}".format(e))
+            logger.error("获取html中的table区域异常!{}".format(e))
         finally:
             return self.replace_text(table_info)
 
@@ -138,6 +139,6 @@ class GetData:
                 replace(taskDescription6, zn_taskDescription6).replace(taskDescription7, zn_taskDescription7). \
                 replace(taskDescription8, zn_taskDescription8).replace(taskDescription9, zn_taskDescription9)
         except Exception as e:
-            print("获取英文替换成中文异常!{}".format(e))
+            logger.error("获取英文替换成中文异常!{}".format(e))
         finally:
             return table_info

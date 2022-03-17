@@ -4,10 +4,11 @@ from get_data import *
 import os
 import shutil
 from jinja2 import Environment, FileSystemLoader
+from loguru import logger
 
 
 def main():
-    print('----------项目初始化ing----------')
+    logger.info('----------项目初始化ing----------')
     if not os.path.exists(out_path):
         os.mkdir(out_path)
     else:
@@ -19,11 +20,11 @@ def main():
         with open(config_path, 'w', encoding='utf8') as f:
             f.write(json.dumps(check_json, indent=4, ensure_ascii=False))
     try:
-        print("----------开始matrix检查app----------")
+        logger.info("----------开始matrix检查app----------")
         cmd = "java -jar {} --config {}".format(matrix_path, config_path)
-        print(f'----------执行命令{cmd}----------')
+        logger.info(f'----------执行命令{cmd}----------')
         subprocess.call(cmd, shell=True)
-        print("----------收集数据ing----------")
+        logger.info("----------收集数据ing----------")
         app_name = check_json['--formatConfig'][0]['group'][-1]['name']
         gd = GetData()
         base_info = gd.get_base()
@@ -45,7 +46,7 @@ def main():
         report_context = {
             "context": context
         }
-        print("----------生成测试报告ing----------")
+        logger.info("----------生成测试报告ing----------")
         template_environment = Environment(
             autoescape=False,
             loader=FileSystemLoader(project_path),
@@ -53,9 +54,9 @@ def main():
         with open(report_path, 'w', encoding='utf8') as f:
             html = template_environment.get_template(template_path).render(report_context)
             f.write(html)
-        print("----------在report文件目录下成功生成测试报告----------")
+        logger.info("----------在report文件目录下成功生成测试报告----------")
     except Exception as e:
-        print("检查app异常!{}".format(e))
+        logger.error("检查app异常!{}".format(e))
 
     
 if __name__ == '__main__':
