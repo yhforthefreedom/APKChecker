@@ -1,10 +1,10 @@
 import subprocess
-from config import *
 from get_data import *
 import os
 import shutil
 from jinja2 import Environment, FileSystemLoader
 from loguru import logger
+import webbrowser
 
 
 def main():
@@ -54,7 +54,8 @@ def main():
         with open(report_path, 'w', encoding='utf8') as f:
             html = template_environment.get_template(template_path).render(report_context)
             f.write(html)
-        logger.info("----------在report文件目录下成功生成测试报告----------")
+        logger.info("----------在report文件目录下成功生成测试报告,正在打开该文件----------")
+        webbrowser.open(f'file://{report_path}')
     except Exception as e:
         logger.error("检查app异常!{}".format(e))
 
